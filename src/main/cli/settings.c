@@ -1069,6 +1069,18 @@ const clivalue_t valueTable[] = {
     { "3d_limit_high",              VAR_UINT16 | MASTER_VALUE, .config.minmaxUnsigned = { PWM_RANGE_MIDDLE, PWM_PULSE_MAX }, PG_MOTOR_3D_CONFIG, offsetof(flight3DConfig_t, limit3d_high) },
     { "3d_switched_mode",           VAR_UINT8 | MASTER_VALUE | MODE_LOOKUP, .config.lookup = { TABLE_OFF_ON }, PG_MOTOR_3D_CONFIG, offsetof(flight3DConfig_t, switched_mode3d) },
 
+    //KBI
+    { "3d_minsyncspeed",             VAR_UINT16 | MASTER_VALUE, .config.minmaxUnsigned = { 100, 10000 }, PG_MOTOR_3D_CONFIG, offsetof(flight3DConfig_t, minsyncspeed3d) },
+
+    { "3d_reversalrampuppwr",        VAR_UINT8  | MASTER_VALUE, .config.minmaxUnsigned = { 5, 100 }, PG_MOTOR_3D_CONFIG, offsetof(flight3DConfig_t, reversalrampuppwr3d) },
+    { "3d_reversalRPMdifferential",  VAR_UINT16 | MASTER_VALUE, .config.minmaxUnsigned  = { 1000 , 5000 }, PG_MOTOR_3D_CONFIG, offsetof(flight3DConfig_t, reversalRPMdifferential3d) },
+    { "3d_throttleStepDelay",       VAR_UINT8 | MASTER_VALUE, .config.minmaxUnsigned  = { 1 ,50 }, PG_MOTOR_3D_CONFIG, offsetof(flight3DConfig_t, throttleStepDelay3d ) },
+    { "3d_pidResetTimeMs",          VAR_UINT16 | MASTER_VALUE, .config.minmaxUnsigned  = { 0 , 500 }, PG_MOTOR_3D_CONFIG, offsetof(flight3DConfig_t, pidResetTimeMs3d ) },
+    { "3d_invRollTrim3d",            VAR_INT8    | MASTER_VALUE, .config.minmax = { -35, 35 }, PG_MOTOR_3D_CONFIG, offsetof(flight3DConfig_t, invRollTrim3d ) },
+    { "3d_invPitchTrim3d",            VAR_INT8    | MASTER_VALUE, .config.minmax = { -35, 35 }, PG_MOTOR_3D_CONFIG, offsetof(flight3DConfig_t, invPitchTrim3d ) },
+
+
+
 // PG_SERVO_CONFIG
 #ifdef USE_SERVOS
     { "servo_center_pulse",         VAR_UINT16 | MASTER_VALUE, .config.minmaxUnsigned = { PWM_PULSE_MIN, PWM_PULSE_MAX }, PG_SERVO_CONFIG, offsetof(servoConfig_t, dev.servoCenterPulse) },

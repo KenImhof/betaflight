@@ -207,43 +207,43 @@
 
 #endif // !defined(USE_CONFIG)
 
-#define USE_RX_PPM
-#define USE_RX_PWM
+//#define USE_RX_PPM
+//#define USE_RX_PWM
 
 #define USE_PINIO
 
 #if !defined(USE_SERIAL_RX)
 
 #define USE_SERIALRX
-#define USE_SERIALRX_CRSF       // Team Black Sheep Crossfire protocol
-#define USE_SERIALRX_GHST       // ImmersionRC Ghost Protocol
-#define USE_SERIALRX_IBUS       // FlySky and Turnigy receivers
-#define USE_SERIALRX_SBUS       // Frsky and Futaba receivers
-#define USE_SERIALRX_SPEKTRUM   // SRXL, DSM2 and DSMX protocol
+//#define USE_SERIALRX_CRSF       // kbi Team Black Sheep Crossfire protocol
+//#define USE_SERIALRX_GHST       // kbi ImmersionRC Ghost Protocol
+//#define USE_SERIALRX_IBUS       // kbiFlySky and Turnigy receivers
+//#define USE_SERIALRX_SBUS       // kbi Frsky and Futaba receivers
+//#define USE_SERIALRX_SPEKTRUM   // kbi SRXL, DSM2 and DSMX protocol
 #define USE_SERIALRX_FPORT      // FrSky FPort
-#define USE_SERIALRX_XBUS       // JR
-#define USE_SERIALRX_SRXL2      // Spektrum SRXL2 protocol
+//#define USE_SERIALRX_XBUS       // kbi JR
+//#define USE_SERIALRX_SRXL2      // Spektrum SRXL2 protocol
 
 #endif // !defined(USE_SERIAL_RX)
 
 #if !defined(USE_TELEMETRY)
 #define USE_TELEMETRY
 
-#define USE_TELEMETRY_FRSKY_HUB
+//#define USE_TELEMETRY_FRSKY_HUB //kbi
 #define USE_TELEMETRY_SMARTPORT
-#define USE_TELEMETRY_CRSF
-#define USE_TELEMETRY_GHST
-#define USE_TELEMETRY_SRXL
+//#define USE_TELEMETRY_CRSF
+//#define USE_TELEMETRY_GHST //kbi
+//#define USE_TELEMETRY_SRXL //kbi
 
 #endif // !defined(USE_TELEMETRY)
 
-#define USE_SERVOS
+//#define USE_SERVOS //kbi
 
-#define USE_VTX
-#define USE_OSD
+//#define USE_VTX //kbi
+//#define USE_OSD //kbi
 #if !defined(USE_OSD_SD) && !defined(USE_OSD_HD)
-#define USE_OSD_SD
-#define USE_OSD_HD
+//#define USE_OSD_SD //kbi
+//#define USE_OSD_HD //kbi
 #endif
 #define USE_BLACKBOX
 
@@ -287,9 +287,9 @@
 #define USE_ALTITUDE_HOLD
 #define USE_POSITION_HOLD
 
-#if !defined(USE_GPS)
+//#if !defined(USE_GPS)
 #define USE_GPS
-#endif
+//#endif
 
 #if !defined(USE_GPS_PLUS_CODES)
 #define USE_GPS_PLUS_CODES
@@ -532,7 +532,7 @@
 #undef USE_INTEGRATED_YAW_CONTROL
 #undef USE_RUNAWAY_TAKEOFF
 
-#endif // USE_WING
+#endif // USE_WING //KBI
 
 // backwards compatibility for older config.h targets
 #ifndef GYRO_CONFIG_USE_GYRO_1

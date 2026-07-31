@@ -39,6 +39,12 @@
 
 */
 
+#define USE_GPS //KBI
+#define USE_POSITION_HOLD //KBI
+#define USE_MAG //KBI
+#define USE_ALTITUDE_HOLD //KBI
+
+
 #ifndef PLATFORM_NO_LIBC
 #define PLATFORM_NO_LIBC 1
 #endif

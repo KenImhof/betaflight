@@ -24,6 +24,7 @@
 #include "common/time.h"
 #include "common/maths.h"
 #include "common/vector.h"
+bool isUpsidedown(void);
 
 #include "pg/pg.h"
 

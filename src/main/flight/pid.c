@@ -64,6 +64,11 @@
 
 #include "pid.h"
 
+#include "config/feature.h" //KBI
+#include "fc/rc_modes.h"  //KBI
+
+
+
 typedef enum {
     LEVEL_MODE_OFF = 0,
     LEVEL_MODE_R,
@@ -217,8 +222,8 @@ void resetPidProfile(pidProfile_t *pidProfile)
         .anti_gravity_cutoff_hz = 5,
         .anti_gravity_p_gain = 100,
         .tpa_mode = TPA_MODE_D,
-        .tpa_rate = 65,
-        .tpa_breakpoint = 1350,
+        .tpa_rate = 75,                 //KBI default = 65
+        .tpa_breakpoint = 1750,         //KBI default = 1350    
         .angle_feedforward_smoothing_ms = 80,
         .angle_earth_ref = 100,
         .horizon_delay_ms = 500, // 500ms time constant on any increase in horizon strength
@@ -307,7 +312,12 @@ const angle_index_t rcAliasToAngleIndexMap[] = { AI_ROLL, AI_PITCH };
 void pidResetIterm(void)
 {
     for (int axis = 0; axis < 3; axis++) {
+
+        pidData[axis].P = 0.0f; //kbi
         pidData[axis].I = 0.0f;
+        pidData[axis].D = 0.0f; //kbi
+        pidData[axis].F = 0.0f; //kbi
+
     }
 }
 
@@ -534,7 +544,8 @@ float pidCompensateThrustLinearization(float throttle)
 // Calculate strength of horizon leveling; 0 = none, 1.0 = most leveling
 STATIC_UNIT_TESTED FAST_CODE_NOINLINE float calcHorizonLevelStrength(void)
 {
-    const float currentInclination = MAX(abs(attitude.values.roll), abs(attitude.values.pitch)) * 0.1f;
+    //const float currentInclination = MAX(abs(attitude.values.roll), abs(attitude.values.pitch)) * 0.1f;
+    const float currentInclination = 0; //kbi
     // 0 when level, 90 when vertical, 180 when inverted (degrees):
     float absMaxStickDeflection = MAX(fabsf(getRcDeflection(FD_ROLL)), fabsf(getRcDeflection(FD_PITCH)));
     // 0-1, smoothed if RC smoothing is enabled
@@ -605,7 +616,29 @@ STATIC_UNIT_TESTED FAST_CODE_NOINLINE float pidLevel(int axis, const pidProfile_
 
     angleTarget = constrainf(angleTarget, -angleLimit, angleLimit);
 
-    const float currentAngle = (attitude.raw[axis] - angleTrim->raw[axis]) / 10.0f; // stepped at 500hz with some 4ms flat spots
+
+    //KBI Horizon Auto Leveling When Upside Down
+    float currentAngle = (attitude.raw[axis] - angleTrim->raw[axis]) / 10.0f; // stepped at 500hz with some 4ms flat spots
+ 
+
+    if ( isUpsidedown() && featureIsEnabled(FEATURE_3D) && !IS_RC_MODE_ACTIVE(BOX3D) ){
+        switch (axis) {
+          case FD_PITCH:
+            currentAngle = (currentAngle*-1) - (float)flight3DConfig()->invPitchTrim3d / 5;
+            if (fabs(currentAngle) > 90) {
+                currentAngle -= SIGN(currentAngle)*180;
+            }
+            break;
+          case FD_ROLL:
+            currentAngle -= (SIGN(currentAngle) * 180) + (float)flight3DConfig()->invRollTrim3d / 5;
+            if (fabs(currentAngle) > 180) {
+                currentAngle -= SIGN(currentAngle)*360;
+            }
+          break;
+         }
+     }
+//KBI
+    
     const float errorAngle = angleTarget - currentAngle;
     float angleRate = errorAngle * pidRuntime.angleGain + angleFeedforward;
 

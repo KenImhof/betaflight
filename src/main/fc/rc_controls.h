@@ -118,6 +118,15 @@ typedef struct flight3DConfig_s {
     uint16_t limit3d_low;                   // pwm output value for max negative thrust
     uint16_t limit3d_high;                  // pwm output value for max positive thrust
     uint8_t switched_mode3d;                // enable '3D Switched Mode'
+
+    uint16_t minsyncspeed3d;                // KBI - bidirectional 3d dshot RPM synchronization speed
+    uint8_t reversalrampuppwr3d;            // KBI - bidirectional 3d dshot RPM synchronization ramp-up power
+    uint16_t reversalRPMdifferential3d;     // KBI - RPM differential check to determine if motors are reversed when checking RPMs
+    uint8_t throttleStepDelay3d;            // KBI - Number of steps * 10 to reach adjusted throttle stick value
+    uint16_t pidResetTimeMs3d;              // KBI - PID reset time after reversal sync is complete
+    int8_t invRollTrim3d;                   // KBI - 3d Inverted Roll Trim
+    int8_t invPitchTrim3d;                  // KBI - 3d Inverted Roll Trim
+
 } flight3DConfig_t;
 
 PG_DECLARE(flight3DConfig_t, flight3DConfig);

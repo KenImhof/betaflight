@@ -946,3 +946,11 @@ bool isUpright(void)
     return true;
 #endif
 }
+bool isUpsidedown(void)
+{
+#ifdef USE_ACC
+  return sensors(SENSOR_ACC) && attitudeIsEstablished && getCosTiltAngle() < 0.0f;
+ #else
+    return false;
+#endif 
+}
