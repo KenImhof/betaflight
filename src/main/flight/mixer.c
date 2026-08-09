@@ -320,10 +320,11 @@ static void calculateThrottleAndCurrentMotorEndpoints(timeUs_t currentTimeUs)
                              if ( motorsynccomplete[0] && motorsynccomplete[1] && motorsynccomplete[2] &&  motorsynccomplete[3]){
 #ifdef USE_REVTIMEDEBUG
                                  if (reversalCounter > 1){ //Skip the first cycle
-                                 reversalTimeAccumulator += ((currentTimeUs - reversalTimeUs)/1000); //Total Reversal Time
-                                 DEBUG_SET(DEBUG_3DREVUS, 0, (int)((reversalTimeAccumulator)/(reversalCounter-1)) );  //Average Reversal Time
-                                 DEBUG_SET(DEBUG_3DREVUS, 1, (int)((currentTimeUs - reversalTimeUs)/1000) );  //Current Reversal Time
-                                 DEBUG_SET(DEBUG_3DREVUS, 2, reversalCounter-1);  //Reversal Counter
+                                     reversalInProcess = false;
+                                     reversalTimeAccumulator += ((currentTimeUs - reversalTimeUs)/1000); //Total Reversal Time
+                                     DEBUG_SET(DEBUG_3DREVUS, 0, (int)((reversalTimeAccumulator)/(reversalCounter-1)) );  //Average Reversal Time
+                                     DEBUG_SET(DEBUG_3DREVUS, 1, (int)((currentTimeUs - reversalTimeUs)/1000) );  //Current Reversal Time
+                                     DEBUG_SET(DEBUG_3DREVUS, 2, reversalCounter-1);  //Reversal Counter
                                  }
                                  reversalCounter++;
 #endif
