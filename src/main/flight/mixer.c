@@ -134,8 +134,8 @@ static void calculateThrottleAndCurrentMotorEndpoints(timeUs_t currentTimeUs)
 
     //static bool stabilizeTimeInProcess = false;  // kbi
 
-    int stabilizeMinRPM; //kbi
-    int stabilizeMaxRPM; //kbi
+    //int stabilizeMinRPM; //kbi
+    //int stabilizeMaxRPM; //kbi
 
 
     static bool motordirectionchange[4];    // kbi
@@ -320,15 +320,14 @@ static void calculateThrottleAndCurrentMotorEndpoints(timeUs_t currentTimeUs)
                              if ( motorsynccomplete[0] && motorsynccomplete[1] && motorsynccomplete[2] &&  motorsynccomplete[3]){
 #ifdef USE_REVTIMEDEBUG
                                  if (reversalCounter > 1){ //Skip the first cycle
-                                     reversalInProcess = false;
                                      reversalTimeAccumulator += ((currentTimeUs - reversalTimeUs)/1000); //Total Reversal Time
                                      DEBUG_SET(DEBUG_3DREVUS, 0, (int)((reversalTimeAccumulator)/(reversalCounter-1)) );  //Average Reversal Time
                                      DEBUG_SET(DEBUG_3DREVUS, 1, (int)((currentTimeUs - reversalTimeUs)/1000) );  //Current Reversal Time
                                      DEBUG_SET(DEBUG_3DREVUS, 2, reversalCounter-1);  //Reversal Counter
-                                 }
-                                 reversalCounter++;
+                                     reversalCounter++;
+                                    }
 #endif
-                                 //stabilizeTimeInProcess = true;
+                                 reversalInProcess = false;
                                  reversalTimeUs = currentTimeUs;
                                  break;
                              }
@@ -340,19 +339,17 @@ static void calculateThrottleAndCurrentMotorEndpoints(timeUs_t currentTimeUs)
                                  pidPreviousError[i] = pidError;
                              }
 
-                             //if (stabilizeTimeInProcess){
-                             stabilizeMinRPM = getDshotRpm(0);
-                             stabilizeMaxRPM = getDshotRpm(0);
-                             for (int j = 1; j < mixerRuntime.motorCount; j++) {
-                                 if (getDshotRpm(j) < stabilizeMinRPM) stabilizeMinRPM = getDshotRpm(j);
-                                 if (getDshotRpm(j) > stabilizeMaxRPM) stabilizeMaxRPM = getDshotRpm(j);
-                             }
-                             if ( stabilizeMaxRPM - stabilizeMinRPM <= 250  && ABS(flight3DConfig()->minsyncspeed3d - getDshotRpm(i)) <=250 ) {
-                                 //stabilizeTimeInProcess = false;
-                                 reversalInProcess = false;
-                                 pidResetIterm();
-                                 break;
-                             }
+                             //stabilizeMinRPM = getDshotRpm(0);
+                             //stabilizeMaxRPM = getDshotRpm(0);
+                             //for (int j = 1; j < mixerRuntime.motorCount; j++) {
+                             //    if (getDshotRpm(j) < stabilizeMinRPM) stabilizeMinRPM = getDshotRpm(j);
+                             //    if (getDshotRpm(j) > stabilizeMaxRPM) stabilizeMaxRPM = getDshotRpm(j);
+                             //}
+                             //if ( stabilizeMaxRPM - stabilizeMinRPM <= 250  && ABS(flight3DConfig()->minsyncspeed3d - getDshotRpm(i)) <=250 ) {
+                             //    reversalInProcess = false;
+                             //    pidResetIterm();
+                             //    break;
+                             //}
                          }
                      }
                  }
